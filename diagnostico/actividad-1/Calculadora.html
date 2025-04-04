@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Calculadora</title>
+<body>
+<input type="text" id="pantalla" disabled>
+    <table>
+        <tr>
+            <td onclick="agregarNumero('1')">1</td>
+            <td onclick="agregarNumero('2')">2</td>
+            <td onclick="agregarNumero('3')">3</td>
+            <td class="mas" onclick="agregarNumero('+')">+</td>
+        </tr>
+        <tr>
+            <td onclick="agregarNumero('4')">4</td>
+            <td onclick="agregarNumero('5')">5</td>
+            <td onclick="agregarNumero('6')">6</td>
+            <td class="menos" onclick="agregarNumero('-')">-</td>
+        </tr>
+        <tr>
+            <td onclick="agregarNumero('7')">7</td>
+            <td onclick="agregarNumero('8')">8</td>
+            <td onclick="agregarNumero('9')">9</td>
+            <td class="multiplicar" onclick="agregarNumero('*')">*</td>
+        </tr>
+        <tr>
+            <td onclick="agregarNumero('0')">0</td>
+            <td class="punto" onclick="agregarNumero('.')">.</td>
+            <td class="igual" onclick="calcular()">=</td>
+            <td class="dividir" onclick="agregarNumero('/')">/</td>
+        </tr>
+    </table>
+        <button class="borrar" onclick="borrarPantalla()">BORRAR</button>
+
+<style>
+    .borrar {
+        color: white;
+        font-family: Arial;
+        font-weight: bold;
+        background-color: red;
+        box-shadow: 0px 5px #BB3E22;
+        width: 200px;
+        height: 30px;
+        border-radius: 6px;
+        border-color: #BB3E22;
+        cursor: pointer;
+    }
+    
+    td {
+        color: white;
+        font-family: Arial;
+        font-weight: bold;
+        font-size: 20px;
+        background-color: blue;
+        box-shadow: 0px 5px cornflowerblue;
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        border-color: black;
+        text-align: center;
+        cursor: pointer;
+      }
+    
+    .igual{background-color: green;}
+    .mas{background-color: green;}
+    .menos{ background-color: green;}
+    .punto{ background-color: green;}
+    .dividir{ background-color: green;}
+    .multiplicar{ background-color: green;}
+
+</style>
+
+<script>
+    
+    function agregarNumero(valor) {
+        document.getElementById("pantalla").value += valor;
+    }
+
+    function calcular() {
+        document.getElementById("pantalla").value = eval(document.getElementById("pantalla").value);
+    }
+
+    function borrarPantalla() {
+        document.getElementById("pantalla").value = "";
+    }
+</script>
