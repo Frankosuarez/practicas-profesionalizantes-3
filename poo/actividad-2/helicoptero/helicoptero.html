@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+
+class Helicoptero {
+constructor() {
+        this.vida = 3;
+        this.armadura = 600;
+        this.combustible = 100.0;
+        this.municionMisiles = 8;
+        this.municionBalas = 1178;
+        this.estado = true;
+    }
+    
+mover(direccion) {
+    if (!this.estado) {
+        console.log("El helicóptero está destruido y no puede moverse.");
+        return;
+    }
+    if (this.combustible <= 0) {
+        console.log("Sin combustible. No se puede mover.");
+        return;
+    }
+    this.combustible -= 5;
+    console.log(`Moviéndose hacia ${direccion}. Combustible restante: ${this.combustible}`);
+    }
+    
+dispararMisil() {
+    if (!this.estado) {
+        console.log("El helicóptero está destruido y no puede disparar.");
+        return;
+    }   
+    if (this.municionMisiles > 0) {
+        this.municionMisiles--;
+        console.log("Disparando misil");
+        console.log("Misiles restantes:", this.municionMisiles);
+    } else {
+    console.log("Sin misiles.");
+    }
+}
+dispararBalas(){
+    if (!this.estado) {
+        console.log("El helicóptero está destruido y no puede disparar.");
+        return;
+    }
+    if (this.municionBalas > 0) {
+        this.municionBalas -= 10;
+        console.log("Disparando Balas");
+        console.log("Balas restantes: ", this.municionBalas);
+    }else {
+        console.log("Sin balas.");
+     }
+}
+    
+recibirDaño(cantidad) {
+    if (!this.estado) {
+        console.log("El helicóptero ya está destruido.");
+        return;
+    }
+
+    if (this.armadura > 0) {
+        this.armadura -= cantidad;
+        console.log("Recibiste: ", cantidad," de daño");
+    }
+    if(this.armadura <= 0){
+        this.vida--;
+        this.armadura = 600;
+        console.log("Perdiste 1 vida..");
+    }else {
+                console.log("te queda: ",this.armadura,"de armadura");
+    }
+    
+    if (this.vida <= 0) {
+        this.estado = false;
+        this.vida = 0;
+        console.log("El helicóptero ha sido destruido.");
+    }
+}
+    
+abrirMapa() {
+    console.log("Abriendo mapa...");
+    console.log("Combustible: ",this.combustible);
+    console.log("armadura: ",this.armadura);
+    console.log("balas: ",this.municionBalas);
+    console.log("misiles: ",this.municionMisiles);
+    console.log("vidas: ",this.vida);
+}
+
+cerrarMapa() {
+    console.log("Cerrando mapa...");
+    }
+}
+    
+const helicoptero = new Helicoptero;
+helicoptero.abrirMapa();
+helicoptero.cerrarMapa();
+helicoptero.dispararBalas();
+helicoptero.dispararMisil();
+helicoptero.recibirDaño(600);
+helicoptero.recibirDaño(70);
+
+</script>
+</html>

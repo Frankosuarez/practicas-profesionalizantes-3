@@ -1,0 +1,13 @@
+Clase: Impresora
+Atributos:
+- tipo: string
+- resolucion: string
+- capacidadTinta: int
+- cantidadTinta: bool
+
+Métodos:
+- imprimir(paginas: int): void
+- verificarCartucho(): float
+- reemplazarCartucho(): void
+- encender(): void
+- apagar(): void

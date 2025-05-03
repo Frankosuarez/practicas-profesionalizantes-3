@@ -1,0 +1,15 @@
+Clase: Helicoptero
+Atributos:
+- vida: int
+- armadura: int
+- combustible: float
+- municionMisiles: int
+- municionBalas: int
+- estado: bool
+
+Métodos:
+- mover(direccion: String ): void
+- dispararBalas: void
+- dispararMisil(): void
+- recibirDanio(cantidad: int): void
+- abrirMapa(): void

@@ -1,0 +1,10 @@
+Clase: Ventilador
+Atributos:
+- velocidadActual: int
+- estaEncendido: boolean
+- numeroVelocidades: int
+
+Métodos:
+- encender(): void
+- apagar(): void
+- cambiarVelocidad(nuevaVelocidad: int): void

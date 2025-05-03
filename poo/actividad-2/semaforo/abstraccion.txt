@@ -1,0 +1,11 @@
+Clase: Semaforo
+Atributos:
+- lucesIDS: string
+- indice: int
+- intervalo: int
+
+Métodos:
+- iniciar(): void
+- apagarLuces(): float
+- encenderLuzActual(): void
+- cambiarLuz(): void

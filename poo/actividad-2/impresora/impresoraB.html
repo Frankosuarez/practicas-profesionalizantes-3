@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+
+class ProductoImpresora {
+    constructor(codigoProducto, nombre, descripcion, precio, stock) {
+        this.codigoProducto = codigoProducto;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.precio = precio;
+        this.stock = stock;
+    }
+
+    verProducto(){
+        console.log("Codigo: ",this.codigoProducto);
+        console.log("Nombre: ",this.nombre);
+        console.log("Descripcion: ",this.descripcion);
+        console.log("Precio: ",this.precio);
+        console.log("Stock: ",this.stock);
+    }
+
+    CambiarPrecio(nuevoPrecio) {
+        this.precio = nuevoPrecio;
+        console.log("Producto: ",this.nombre,"cambio de precio: $",nuevoPrecio);
+    }
+
+    actualizarStock(cantidad) {
+        this.stock += cantidad;
+        console.log("Stock actualizado. Nuevo stock: ",this.stock);
+    }
+}
+
+const impresora = new ProductoImpresora("62a4","impresora","impresora laser monocromatica",200,6);
+impresora.verProducto();
+impresora.CambiarPrecio(100);
+impresora.actualizarStock(4);
+
+</script>
+</html>

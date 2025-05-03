@@ -1,0 +1,14 @@
+Clase: Auto
+Atributos:
+- capacidadTanque: int
+- nivelCombustible: int
+- estaEncendido: boolean
+- velocidad: int
+
+Métodos:
+- encender(): void
+- apagar(): void
+- acelerar(): void
+- frenar(): void
+- cargarTanque(): void
+- revisarTanque(): void

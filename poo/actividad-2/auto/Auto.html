@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+class Auto {
+    constructor(capacidadTanque,nivelCombustible){
+        this.capacidadTanque = capacidadTanque;
+        this.nivelCombustible = nivelCombustible;
+        this.estaEncendido = false;
+        this.velocidad = 0;
+    }
+
+    Encender(){
+        if(this.estaEncendido){
+            console.log("Auto encendido");
+        }else {
+            console.log("encendiendo auto...")
+            this.estaEncendido = true;
+            console.log("Auto encendido");
+        }
+    }
+
+    Apagar(){
+        if(this.estaEncendido){
+            console.log("apagando auto..");
+            this.estaEncendido = false;
+            console.log("auto apagado");
+        }else {
+            console.log("auto apagado");
+        }
+    }
+    Acelerar(){
+        if(this.estaEncendido){
+            if(this.nivelCombustible > 0){
+                if(this.velocidad == 0){
+                    this.velocidad = 10;
+                    this.nivelCombustible = this.nivelCombustible -10;
+                    console.log("acelerando a ", this.velocidad );
+                }else {
+                    this.velocidad = this.velocidad * 2;
+                    this.nivelCombustible = this.nivelCombustible -10;
+                    console.log("acelerando a ", this.velocidad );
+                    }
+            }else {
+            console.log("Sin combustible");
+                }
+        }else {
+        console.log("el auto esta apagado");
+        }
+    }
+
+    Frenar(){
+        console.log("frenando...");
+        this.velocidad = 0;
+    }
+
+    RevisarTanque(){
+        console.log(this.nivelCombustible,"de ",this.capacidadTanque);
+    }
+
+    CargarTanque(){
+        if(this.nivelCombustible < this.capacidadTanque){
+            let i = this.nivelCombustible;
+            for(; i< this.capacidadTanque ;i = i+10){
+                console.log("Cargando tanque:" ,i);
+            }
+            this.nivelCombustible = i;
+            console.log("tanque lleno");
+
+        }else {
+            console.log("tanque lleno");
+        }
+    }
+}
+
+const auto = new Auto(100,40);
+auto.Encender();
+auto.RevisarTanque();
+auto.Acelerar();
+auto.Acelerar();
+auto.RevisarTanque();
+auto.Frenar();
+auto.Apagar();
+auto.CargarTanque();
+
+</script>
+</html>
+

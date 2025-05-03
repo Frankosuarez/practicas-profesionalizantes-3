@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+
+class Impresora {
+    constructor(tipo, resolucion, capacidadTinta) {
+        this.tipo = tipo;
+        this.resolucion = resolucion; 
+        this.capacidadTinta = capacidadTinta; 
+        this.cantidadTinta = capacidadTinta;
+        this.encendida = false;
+    }
+
+    encender() {
+        if (!this.encendida) {
+            this.encendida = true;
+            console.log("Impresora encendida.");
+        } else {
+            console.log("La impresora ya está encendida.");
+        }
+    }
+
+    apagar() {
+        if (this.encendida) {
+            this.encendida = false;
+            console.log("Impresora apagada.");
+        } else {
+            console.log("La impresora ya está apagada.");
+        }
+    }
+
+    imprimir(paginas) {
+        if (!this.encendida) {
+            console.log("La impresora está apagada.");
+            return;
+        }
+
+        if(this.cantidadTinta <= 0){
+        console.log("sin tinta");
+        }else {
+        for(let i = 0;i < paginas; i++){
+            console.log("imprimiendo pagina: ", i+1,"de",paginas);
+            this.cantidadTinta--;
+        }
+        }
+    }
+
+    verificarCartucho() {
+        console.log("Nivel de tinta:",this.cantidadTinta);
+    }
+
+    reemplazarCartucho() {
+        this.cantidadTinta = this.capacidadTinta;
+        console.log("Cartucho reemplazado.");
+    }
+}
+const impresora = new Impresora("laser","monocromatica",100);
+impresora.encender();
+impresora.verificarCartucho();
+impresora.imprimir(10);
+impresora.verificarCartucho()
+impresora.apagar();
+impresora.reemplazarCartucho();
+
+
+</script>
+</html>

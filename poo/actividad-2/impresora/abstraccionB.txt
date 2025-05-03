@@ -1,0 +1,11 @@
+Clase: ProductoImpresora
+Atributos:
+- codigoProducto: String
+- nombre: String
+- descripcion: String
+- precio: float
+- stock: int
+
+Métodos:
+- CambiarPrecio(nuevoPrecio: float): void
+- actualizarStock(cantidad: int): void

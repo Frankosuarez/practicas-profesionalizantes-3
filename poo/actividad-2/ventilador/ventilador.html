@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+
+    class Ventilador {
+        constructor() {
+          this.numeroVelocidades = 5;
+          this.velocidadActual = 0;
+          this.estaEncendido = false;
+        }
+      
+        encender() {
+          if (!this.estaEncendido) {
+            this.estaEncendido = true;
+            this.velocidadActual = 1;
+            console.log("Ventilador encendido.");
+            console.log("Velocidad actual: ",this.velocidadActual);
+          } else {
+            console.log("El ventilador ya está encendido.");
+          }
+        }
+      
+        apagar() {
+          if (this.estaEncendido) {
+            this.estaEncendido = false;
+            this.velocidadActual = 0;
+            console.log("Ventilador apagado.");
+          } else {
+            console.log("El ventilador ya está apagado.");
+          }
+        }
+      
+        cambiarVelocidad(nuevaVelocidad) {
+          if (!this.estaEncendido) {
+            console.log("Primero debes encender el ventilador.");
+            return;
+          }
+      
+          if (nuevaVelocidad <= 5) {
+            this.velocidadActual = nuevaVelocidad;
+            console.log("Velocidad cambiada a: " + nuevaVelocidad);
+          } else {
+            console.log("Velocidad inválida. Debe estar entre 1 y 5");
+          }
+        }
+      }
+
+      const ventilador = new Ventilador();
+      ventilador.encender();
+      ventilador.cambiarVelocidad(3);
+      ventilador.apagar();
+      
+
+</script>
+</html>

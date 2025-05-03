@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Semáforo</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #222;
+    }
+    .semaforo {
+      background: #333;
+      padding: 20px;
+      border-radius: 10px;
+      width: 100px;
+    }
+    .luz {
+      width: 60px;
+      height: 60px;
+      margin: 10px auto;
+      border-radius: 50%;
+      background: #111;
+      transition: background 0.5s;
+    }
+    .rojo.activo { background: red; }
+    .amarillo.activo { background: yellow; }
+    .verde.activo { background: green; }
+  </style>
+</head>
+<body>
+  <div class="semaforo">
+    <div class="luz rojo" id="rojo"></div>
+    <div class="luz amarillo" id="amarillo"></div>
+    <div class="luz verde" id="verde"></div>
+  </div>
+
+  <script>
+    class Semaforo {
+      constructor(lucesIds, intervalo = 1000) {
+        this.luces = lucesIds;
+        this.indice = 0;
+        this.intervalo = intervalo;
+      }
+
+      apagarLuces() {
+        this.luces.forEach(id => {
+          document.getElementById(id).classList.remove('activo');
+        });
+      }
+
+      encenderLuzActual() {
+        const luzActual = this.luces[this.indice];
+        document.getElementById(luzActual).classList.add('activo');
+      }
+
+      cambiarLuz() {
+        this.apagarLuces();
+        this.encenderLuzActual();
+        this.indice = (this.indice + 1) % this.luces.length;
+      }
+
+      iniciar() {
+        this.cambiarLuz(); 
+        setInterval(() => this.cambiarLuz(), this.intervalo);
+      }
+    }
+
+    const semaforo = new Semaforo(['rojo', 'amarillo', 'verde'], 1000);
+    semaforo.iniciar();
+  </script>
+</body>
+</html>
