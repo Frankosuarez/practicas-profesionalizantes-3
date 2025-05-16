@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>Semáforo con Círculo Fluido</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #ddd;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 40px;
+    }
+
+    .semaforo {
+      background-color: #222;
+      border-radius: 20px;
+      padding: 20px;
+      width: 120px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    }
+
+    .luz {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background-color: #444;
+      border: 2px solid #111;
+      transition: background-color 0.3s, box-shadow 0.3s;
+    }
+
+    .encendida.roja {
+      background-color: red;
+      box-shadow: 0 0 20px red;
+    }
+
+    .encendida.amarilla {
+      background-color: yellow;
+      box-shadow: 0 0 20px yellow;
+    }
+
+    .encendida.verde {
+      background-color: green;
+      box-shadow: 0 0 20px green;
+    }
+
+    .botones {
+      margin-top: 30px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .botones button {
+      padding: 10px 15px;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      background-color: #444;
+      color: white;
+      cursor: pointer;
+    }
+
+    .botones button:hover {
+      background-color: #666;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="semaforo">
+    <div id="red" class="luz roja"></div>
+    <div id="yellow" class="luz amarilla"></div>
+    <div id="green" class="luz verde"></div>
+  </div>
+
+  <div class="botones">
+    <button id="on">Encender</button>
+    <button id="off">Apagar</button>
+  </div>
+
+  <canvas id="circleCanvas" width="480" height="100" style="border:1px solid #ccc; background:#f1f1f1; margin-top: 40px;"></canvas>
+
+  <script>
+    class SemaphoreView {
+      constructor(model) {
+        this._model = model;
+        this._model.addEventListener('changed', () => this.updateView());
+        this.updateView();
+      }
+
+      updateView() {
+        const state = this._model.getModelState();
+        document.getElementById('red').classList.toggle('encendida', state.red);
+        document.getElementById('yellow').classList.toggle('encendida', state.yellow);
+        document.getElementById('green').classList.toggle('encendida', state.green);
+      }
+    }
+
+    class SemaphoreModel extends EventTarget {
+      constructor() {
+        super();
+        this.timer = 0;
+        this.redTime = 4;
+        this.transitionTime = 1;
+        this.greenTime = 4;
+        this.setShutdownState();
+        this.isRunning = false;
+      }
+
+      getModelState() {
+        return {
+          red: this.redLightState,
+          yellow: this.yellowLightState,
+          green: this.greenLightState
+        };
+      }
+
+      setShutdownState() {
+        this.redLightState = false;
+        this.yellowLightState = false;
+        this.greenLightState = false;
+        this.dispatchEvent(new CustomEvent('changed'));
+      }
+
+      setRedToGreenTransitionState() {
+        this.redLightState = true;
+        this.yellowLightState = true;
+        this.greenLightState = false;
+        this.dispatchEvent(new CustomEvent('changed'));
+      }
+
+      setGreenLightState() {
+        this.redLightState = false;
+        this.yellowLightState = false;
+        this.greenLightState = true;
+        this.dispatchEvent(new CustomEvent('changed'));
+      }
+
+      setRedLightState() {
+        this.redLightState = true;
+        this.yellowLightState = false;
+        this.greenLightState = false;
+        this.dispatchEvent(new CustomEvent('changed'));
+      }
+
+      setGreenToRedTransitionState() {
+        this.redLightState = false;
+        this.yellowLightState = true;
+        this.greenLightState = true;
+        this.dispatchEvent(new CustomEvent('changed'));
+      }
+
+      onTickEventHandler(event) {
+        this.timer++;
+
+        if (this.timer < this.redTime) {
+          this.setRedLightState();
+        } else if (this.timer < this.redTime + this.transitionTime) {
+          this.setRedToGreenTransitionState();
+        } else if (this.timer < this.redTime + this.transitionTime + this.greenTime) {
+          this.setGreenLightState();
+        } else if (this.timer <= this.redTime + 2 * this.transitionTime + this.greenTime) {
+          this.setGreenToRedTransitionState();
+        } else {
+          this.timer = 0;
+        }
+
+        this.dispatchEvent(new CustomEvent('changed'));
+      }
+
+      run() {
+        if (!this.isRunning) {
+          this.worker = new Worker("timer.js");
+          this.worker.addEventListener('message', this.onTickEventHandler.bind(this));
+          this.isRunning = true;
+        }
+      }
+
+      shutdown() {
+        if (this.isRunning) {
+          this.worker.removeEventListener('message', this.onTickEventHandler);
+          this.worker.terminate();
+          this.setShutdownState();
+          this.isRunning = false;
+        }
+      }
+    }
+
+    class Circle {
+      constructor(ctx, width, height, color, x, y) {
+        this.ctx = ctx;
+        this.width = width;
+        this.height = height;
+        this.color = color;
+        this.x = x;
+        this.y = y;
+      }
+
+      update() {
+        this.ctx.clearRect(0, 0, 480, 100);
+        this.ctx.fillStyle = this.color;
+        this.ctx.beginPath();
+        this.ctx.arc(this.x + this.width / 2, this.y + this.height / 2, this.width / 2, 0, 2 * Math.PI);
+        this.ctx.fill();
+      }
+
+      move() {
+        this.x += 2; 
+        if (this.x > 480) this.x = -this.width;
+      }
+    }
+
+    function main() {
+      const semaphore = new SemaphoreModel();
+      const view = new SemaphoreView(semaphore);
+
+      const canvas = document.getElementById('circleCanvas');
+      const ctx = canvas.getContext('2d');
+      const circle = new Circle(ctx, 30, 30, 'grey', 10, 35);
+      circle.update();
+
+      function animate() {
+        requestAnimationFrame(animate);
+        if (!semaphore.redLightState) {
+          circle.move();
+        }
+        circle.update();
+      }
+
+      animate();
+
+      document.getElementById('on').onclick = () => semaphore.run();
+      document.getElementById('off').onclick = () => semaphore.shutdown();
+    }
+
+    window.onload = main;
+  </script>
+</body>
+</html>
