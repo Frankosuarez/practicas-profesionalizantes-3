@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Actividad-4</title>
+    <style>
+        body {
+            width: 50%;
+            height: 50%;
+            border: 2px solid black;
+        }
+    </style>
+</head>
+<body>
+<script>
+
+const canvas = document.createElement('canvas');
+canvas.width = 770;
+canvas.height = 500;
+document.body.appendChild(canvas);
+
+const ctx = canvas.getContext('2d');
+
+class Rectangulo {
+    constructor(ctx) {
+        this.ctx = ctx;
+        this.x = 200;
+        this.y = 200;
+        this.width = 100;
+        this.height = 50;
+        this.angle = 0;
+    }
+
+    clearCanvas() {
+        this.ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    drawRect() {
+        this.clearCanvas();
+        this.ctx.save();
+        this.ctx.translate(this.x, this.y);
+        this.ctx.rotate(this.angle);
+        this.ctx.fillStyle = 'gray';
+        this.ctx.fillRect(-this.width / 2, -this.height / 2, this.width, this.height);
+        this.ctx.restore();
+    }
+
+    rotateRect(radianes) {
+        this.angle += radianes;
+        this.drawRect();
+    }
+
+    mover(valor) {
+        this.x += Math.cos(this.angle) * valor;
+        this.y += Math.sin(this.angle) * valor;
+        this.drawRect();
+    }
+}
+
+class RectController {
+    constructor(rectangulo) {
+        this.rectangulo = rectangulo;
+    }
+
+    run() {
+        document.addEventListener('keydown', (event) => {
+            switch (event.key) {
+                case 'ArrowUp':
+                    this.rectangulo.mover(20);
+                    break;
+                case 'ArrowDown':
+                    this.rectangulo.mover(-20);
+                    break;
+                case 'ArrowLeft':
+                    this.rectangulo.rotateRect(-0.3);
+                    break;
+                case 'ArrowRight':
+                    this.rectangulo.rotateRect(0.3);
+                    break;
+            }
+        });
+    }
+}
+
+function main() {
+
+    const rectangulo = new Rectangulo(ctx);
+    const rectanguloCtrl = new RectController(rectangulo);
+    rectanguloCtrl.run();
+
+}
+
+window.onload = main;
+
+</script>
+</body>
+</html>
