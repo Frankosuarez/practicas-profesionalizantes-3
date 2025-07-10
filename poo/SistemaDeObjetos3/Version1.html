@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Objetos 3</title>
+    <style>
+     body {
+        width: 50%;
+        height: 50%;
+        border: 2px solid black;
+     }
+    </style>
+</head>
+<body>
+    
+</body>
+<script>
+const canvas = document.createElement('canvas');
+canvas.width = 770;
+canvas.height = 500;
+document.body.appendChild(canvas);
+
+const ctx = canvas.getContext('2d');
+
+class Figura{
+    constructor(nombre, color, x, y, ctx){
+        this.nombre = nombre;
+        this.color = color;
+        this.x = x;
+        this.y = y;
+        this.ctx = ctx;
+        this.angle = 0;
+
+    }
+
+    draw(){
+        console.log("dibujando....");
+    }
+
+    rotate(radianes) {
+        this.angle += radianes;
+        this.draw();
+    }
+
+    mover(valor) {
+        this.x += Math.cos(this.angle) * valor;
+        this.y += Math.sin(this.angle) * valor;
+        this.draw();
+    }
+}
+
+class Rectangulo extends Figura {
+    constructor(nombre, color, x, y, width, height, ctx){
+        super(nombre, color, x, y, ctx)
+        this.width = width;
+        this.height = height;
+
+    }
+    clearCanvas() {
+        this.ctx.clearRect(0, 0, canvas.width, canvas.height);
+        //this.ctx.clearRect(0, 0, canvas.width, canvas.height);
+        //ctx.clearRect(x, y, width, height);
+
+    }
+
+    draw() {
+        this.clearCanvas();
+        this.ctx.save();
+        this.ctx.translate(this.x, this.y);
+        this.ctx.rotate(this.angle);
+        this.ctx.fillStyle = this.color;
+        this.ctx.fillRect(-this.width / 2, -this.height / 2, this.width, this.height);
+        this.ctx.restore();
+    }
+
+}
+
+class Circulo extends Figura {
+    constructor(nombre, color, x, y, radius, ctx){
+        super(nombre,color,x,y,ctx)
+        this.radius = radius;
+    }
+    clearCanvas() {
+        this.ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    draw() {
+        this.clearCanvas();
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, 2* Math.PI);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+    }
+
+}
+
+class FigureController {
+    constructor(figure) {
+        this.figure = figure;
+    }
+
+    run() {
+        document.addEventListener('keydown', (event) => {
+            switch (event.key) {
+                case 'ArrowUp':
+                    this.figure.mover(20);
+                    break;
+                case 'ArrowDown':
+                    this.figure.mover(-20);
+                    break;
+                case 'ArrowLeft':
+                    this.figure.rotate(-0.3);
+                    break;
+                case 'ArrowRight':
+                    this.figure.rotate(0.3);
+                    break;
+            }
+        });
+    }
+}
+
+
+function main(){
+    const rectangulo = new Rectangulo("Rectangulo1","gray", 200, 200, 100, 50, ctx);
+
+    const circulo = new Circulo("circulo1", "black", 400, 200, 80, ctx);
+
+    const fController = new FigureController(circulo);
+    fController.run();
+
+    circulo.draw();
+
+    //para mas adelante, cambiar los atributos de figure,poner starAngle y endAngle en valor constante y predeterminado
+    //ajustar el clearRect para que solo borre su figura
+
+}
+
+window.onload = main;
+
+/* Para despues:Circulolet numeros = [1, 2, 3];
+numeros.push(4);     // Agrega al final
+numeros.pop();       // Quita el último
+numeros.unshift(0);  // Agrega al inicio
+numeros.shift();     // Quita el primero */
+
+
+</script>
+</html>
