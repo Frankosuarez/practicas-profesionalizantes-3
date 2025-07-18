@@ -1,2 +1,82 @@
 Como segunda propuesta podriamos implementar un gestor de contenedores como docker(lo instalamos pero no vimos
 mucho como se usa) para empaquetar un programa,como usar un repositorio de imagenes de un software,etc .
+
+Título del producto/servicio:
+Gestor de Contenedores con Docker para Empaquetado de Software
+
+¿Para qué haría esto? ¿Qué motivación tiene? ¿Cuál es la intención?
+Como segunda propuesta podríamos implementar un gestor de contenedores como Docker para empaquetar un programa, usar un repositorio de imágenes de un software, etc . La motivación es poder ejecutar y distribuir aplicaciones de forma eficiente, segura y reproducible. La intención es profundizar en el uso de contenedores para encapsular entornos de ejecución y facilitar el despliegue de proyectos desarrollados.
+
+Descripción general:
+Este proyecto consiste en utilizar Docker como herramienta principal para crear contenedores que permitan empaquetar aplicaciones, facilitar su despliegue y compartirlas mediante repositorios de imágenes. El objetivo es entender el ciclo completo de construcción, publicación y ejecución de contenedores para software propio o de terceros. Esta solución permite aislar dependencias, automatizar configuraciones y reducir problemas de compatibilidad entre entornos.
+
+Contexto del proyecto: Problema, Necesidad u Oportunidad
+Problema:
+Uno de los principales desafíos al desarrollar y compartir software es garantizar que funcione correctamente en distintos entornos. Diferencias en versiones de librerías, configuraciones o sistemas operativos generan errores difíciles de reproducir. Esto puede ralentizar el desarrollo, la prueba y la implementación de aplicaciones.
+
+Oportunidad:
+Docker ofrece una oportunidad clara para simplificar el despliegue de aplicaciones al permitir empaquetarlas con todas sus dependencias y configuraciones. Su uso está creciendo tanto en entornos educativos como empresariales, lo cual hace valioso aprender a usarlo correctamente desde etapas tempranas de la formación profesional.
+
+Necesidad:
+Existe una necesidad concreta de encapsular el software y sus entornos de ejecución para facilitar el mantenimiento, despliegue y colaboración entre equipos de desarrollo. Además, muchas empresas requieren conocimientos de Docker como parte de sus requisitos técnicos.
+
+Viabilidad Tecnica:
+Para desarrollar esta propuesta se parte de conocimientos adquiridos en la carrera, como:
+
+Sistemas operativos
+
+Redes y protocolos de comunicación
+
+Arquitectura de software
+
+Administración básica de sistemas
+
+Sin embargo, sería necesario incorporar conocimientos nuevos, como:
+
+Creación de archivos Dockerfile
+
+Manejo de imágenes y contenedores
+
+Orquestación con docker-compose
+
+Buenas prácticas de seguridad en contenedores
+
+Persistencia de datos y volúmenes
+
+Networking entre contenedores
+
+Análisis de mercado y propuesta de valor:
+El uso de contenedores está ampliamente difundido en la industria. Existen múltiples soluciones empresariales como Kubernetes o OpenShift, que complementan o extienden el uso de Docker. Sin embargo, para muchos proyectos pequeños o medianos, Docker sigue siendo la herramienta principal por su simplicidad y potencia.
+
+Propuesta única:
+Este proyecto se enfoca en integrar Docker como parte de la formación práctica en proyectos reales, permitiendo a los estudiantes entender cómo desplegar, probar y distribuir sus aplicaciones de forma profesional, sin depender de servidores externos o configuraciones complejas.
+
+Funcionalidades esenciales:
+Construcción de imágenes personalizadas mediante archivos Dockerfile.
+
+Ejecución de contenedores locales para pruebas o producción.
+
+Uso de docker-compose para gestionar múltiples contenedores.
+
+Publicación de imágenes en repositorios como Docker Hub.
+
+Montaje de volúmenes para persistencia de datos.
+
+Configuración de redes internas entre contenedores.
+
+Documentación del proceso para su reutilización por otros estudiantes o docentes.
+
+Funcionalidades deseadas a futuro:
+Orquestación con Kubernetes (minikube o k3s).
+
+Despliegue en la nube (AWS, Azure o GCP).
+
+Integración con CI/CD para despliegue automatizado.
+
+Análisis de seguridad de contenedores.
+
+Panel de monitoreo con herramientas como Portainer o Grafana.
+
+Automatización de pruebas dentro del contenedor.
+
+Creación de imágenes base propias con plantillas para estudiantes.
